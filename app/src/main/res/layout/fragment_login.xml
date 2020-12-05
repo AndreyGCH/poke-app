@@ -12,7 +12,7 @@
         android:layout_height="200dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/loginLinearLayoutCompat"
+        app:layout_constraintBottom_toTopOf="@+id/loginLinearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,15 +21,17 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:src="@drawable/ic_pokedex" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/loginLinearLayoutCompat"
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/loginLinearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginImageView">
+        app:layout_constraintTop_toBottomOf="@+id/loginImageView"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtLoginTrainer"
@@ -37,45 +39,43 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:imeOptions="actionDone"
             android:hint="Trainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <RadioGroup
+    <RadioGroup
 
-            android:layout_width="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/loginLinearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/loginLinearLayout">
+
+        <RadioButton
+            android:id="@+id/radioButtonMale"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtLoginTrainer"
-            >
+            android:layout_marginEnd="30dp"
+            android:text="Male"
+            tools:layout_editor_absoluteX="207dp"
+            tools:layout_editor_absoluteY="86dp" />
 
-            <RadioButton
-                android:id="@+id/radioButtonMale"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Male"
-                tools:layout_editor_absoluteX="207dp"
-                tools:layout_editor_absoluteY="86dp"
-                android:layout_marginEnd="30dp"/>
-
-            <RadioButton
-                android:id="@+id/radioButtonFemale"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Female"
-                tools:layout_editor_absoluteX="14dp"
-                tools:layout_editor_absoluteY="36dp"
-                android:layout_marginStart="30dp"/>
-        </RadioGroup>
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <RadioButton
+            android:id="@+id/radioButtonFemale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_weight="1"
+            android:text="Female"
+            tools:layout_editor_absoluteX="14dp"
+            tools:layout_editor_absoluteY="36dp" />
+    </RadioGroup>
 
     <Button
         android:id="@+id/loginButton"
@@ -85,5 +85,9 @@
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:enabled="false"/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,31 +1,62 @@
 package com.example.pokeapp.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
+import androidx.navigation.fragment.findNavController
 import com.example.pokeapp.R
+import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.widget.textChanges
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.fragment_login.*
+import java.util.concurrent.TimeUnit
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment() {
 
-
+    private val disposable = CompositeDisposable()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false)
+    }
+
+    override fun onDestroy() {
+        disposable.clear()
+        super.onDestroy()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        disposable.add(
+            txtLoginTrainer.textChanges()
+                    .skipInitialValue()
+                    .debounce(400, TimeUnit.MILLISECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        val isValid = !TextUtils.isEmpty(txtLoginTrainer.text.toString())
+                        loginButton.isEnabled = isValid
+                        loginLinearLayout.error = if(TextUtils.isEmpty(txtLoginTrainer.text.toString())) "Campo requerido" else null
+                    }
+        )
+        disposable.add(
+                loginButton.clicks()
+                        .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                        .subscribe{
+                            val action = LoginFragmentDirections.actionLoginFragmentToPokeListFragment(txtLoginTrainer.text.toString())
+                            findNavController().navigate(action)
+                        }
+        )
     }
 
 }
