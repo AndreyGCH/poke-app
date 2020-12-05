@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:src="@drawable/ic_pokedex" />
+        android:src="@drawable/ic_star" />
 
     <com.google.android.material.textfield.TextInputLayout
 
