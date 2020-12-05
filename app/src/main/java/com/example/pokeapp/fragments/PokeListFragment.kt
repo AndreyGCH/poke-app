@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.pokeapp.R
 import com.example.pokeapp.adapters.PokeAdapter
 import com.example.pokeapp.models.pokemon
@@ -27,23 +28,24 @@ class PokeListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lblTrainerName.text = args.trainerName;
         pokeRecyclerView.adapter = adapter
+        pokeRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         adapter.pokemons = getDummyPokeList()
 
     }
 
     private fun getDummyPokeList(): List<pokemon>{
         return listOf(
+            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", true),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
+            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", true),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
+            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", true),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
             pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),

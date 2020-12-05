@@ -17,24 +17,17 @@
 
     <ImageView
         android:id="@+id/imgNoPoke"
-        android:layout_width="222dp"
-        android:layout_height="324dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.393"
-        tools:src="@drawable/ic_who" />
-
-    <TextView
-        android:id="@+id/lblTrainerName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/whov2"
+        />
 
     <TextView
         android:id="@+id/lblTrainer"
@@ -43,20 +36,33 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:text="Trainer:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toStartOf="@+id/lblTrainerName"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lblTrainerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pokeRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/poke_item_view_holder"
-        tools:itemCount="6"/>
+        app:layout_constraintTop_toTopOf="@+id/imgNoPoke"
+        tools:itemCount="6"
+        tools:listitem="@layout/poke_item_view_holder" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
