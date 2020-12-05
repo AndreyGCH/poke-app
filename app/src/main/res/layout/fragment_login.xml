@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/loginImageView"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="200dp"
+        android:scaleType="fitXY"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/loginLinearLayout"
@@ -19,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintVertical_chainStyle="packed"
-        android:src="@drawable/ic_star" />
+        android:src="@drawable/pokemon" />
 
     <com.google.android.material.textfield.TextInputLayout
 
