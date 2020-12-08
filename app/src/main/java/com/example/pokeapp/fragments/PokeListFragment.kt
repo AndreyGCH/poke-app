@@ -5,16 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.pokeapp.R
 import com.example.pokeapp.adapters.PokeAdapter
 import com.example.pokeapp.models.pokemon
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_poke_list.*
+import java.util.concurrent.TimeUnit
 
 class PokeListFragment : Fragment() {
     private val args: PokeListFragmentArgs by navArgs()
     private val adapter = PokeAdapter()
+    private  val disposables =  CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,10 +30,24 @@ class PokeListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        disposables.clear()
+
         lblTrainerName.text = args.trainerName;
         pokeRecyclerView.adapter = adapter
         pokeRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         adapter.pokemons = getDummyPokeList()
+
+        disposables.add(adapter.onPokeClicked
+                .subscribe{pokemon ->
+                    val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
+                    findNavController().navigate(action)
+                }
+        )
+    }
+
+    override fun onDestroy() {
+        disposables.clear()
+        super.onDestroy()
 
     }
 
@@ -55,5 +73,7 @@ class PokeListFragment : Fragment() {
 
         )
     }
+
+
 
 }

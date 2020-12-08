@@ -6,8 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokeapp.R
 import com.example.pokeapp.models.pokemon
 import com.example.pokeapp.viewholders.pokeViewHolder
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 class PokeAdapter: RecyclerView.Adapter<pokeViewHolder>() {
+
+    private val clickListener: PublishSubject<pokemon> =  PublishSubject.create()
+
+    val onPokeClicked: Observable<pokemon> = clickListener.hide()
 
     var pokemons: List<pokemon> = emptyList()
     set(value) {
@@ -21,7 +27,7 @@ class PokeAdapter: RecyclerView.Adapter<pokeViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: pokeViewHolder, position: Int) {
-        holder.bind(pokemons[position])
+        holder.bind(pokemons[position], clickListener)
     }
 
     override fun getItemCount() = pokemons.size
