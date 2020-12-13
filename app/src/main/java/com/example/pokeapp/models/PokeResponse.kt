@@ -1,3 +1,3 @@
 package com.example.pokeapp.models
 
-data class pokeResponse(val count: String, val results: pokeDataResponse)
+data class pokeResponse(val results: List<PokeNames>)

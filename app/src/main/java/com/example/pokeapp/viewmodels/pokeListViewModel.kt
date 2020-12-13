@@ -11,7 +11,7 @@ class pokeListViewModel : ViewModel(){
     private val retrofitProvider = RetrofitProvider()
 
     fun getPokeList(){
-        val limit = 10
+        val limit = 1118
         Log.d("Lista", "getPoke")
         retrofitProvider.getPokeService().getPokeList(limit).enqueue(object : retrofit2.Callback<pokeResponse>{
             override fun onResponse(call: Call<pokeResponse>, response: Response<pokeResponse>) {
