@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.pokeapp.R
 import com.example.pokeapp.adapters.PokeAdapter
 import com.example.pokeapp.models.pokemon
+import com.example.pokeapp.viewmodels.pokeListViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_poke_list.*
 import java.util.concurrent.TimeUnit
@@ -19,6 +22,7 @@ class PokeListFragment : Fragment() {
     private val args: PokeListFragmentArgs by navArgs()
     private val adapter = PokeAdapter()
     private  val disposables =  CompositeDisposable()
+    private val viewModel: pokeListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +47,8 @@ class PokeListFragment : Fragment() {
                     findNavController().navigate(action)
                 }
         )
+
+        viewModel.getPokeList()
     }
 
     override fun onDestroy() {
