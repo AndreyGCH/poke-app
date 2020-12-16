@@ -1,3 +1,3 @@
 package com.example.pokeapp.models
 
-data class pokeResponse(val results: List<PokeNames>)
+data class PokeResponse(val results: List<PokeNames>)
