@@ -32,7 +32,7 @@
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <argument
-            android:name="pokemon"
-            app:argType="com.example.pokeapp.models.pokemon" />
+            android:name="pokeDetails"
+            app:argType="com.example.pokeapp.models.PokeDetails" />
     </fragment>
 </navigation>

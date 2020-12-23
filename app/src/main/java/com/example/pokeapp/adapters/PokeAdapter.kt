@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokeapp.R
+import com.example.pokeapp.models.PokeDetails
 import com.example.pokeapp.models.PokeNames
 import com.example.pokeapp.models.pokemon
 import com.example.pokeapp.viewholders.pokeViewHolder
@@ -12,11 +13,11 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 
 class PokeAdapter: RecyclerView.Adapter<pokeViewHolder>() {
 
-    private val clickListener: PublishSubject<PokeNames> =  PublishSubject.create()
+    private val clickListener: PublishSubject<PokeDetails> =  PublishSubject.create()
 
-    val onPokeClicked: Observable<PokeNames> = clickListener.hide()
+    val onPokeClicked: Observable<PokeDetails> = clickListener.hide()
 
-    var pokemons: List<PokeNames> = emptyList()
+    var pokemons: List<PokeDetails> = emptyList()
     set(value) {
         field = value
         notifyDataSetChanged()

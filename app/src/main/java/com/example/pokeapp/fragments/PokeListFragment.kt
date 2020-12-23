@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
@@ -16,9 +17,11 @@ import com.example.pokeapp.adapters.PokeAdapter
 import com.example.pokeapp.models.pokemon
 import com.example.pokeapp.viewmodels.pokeListViewModel
 import com.google.android.material.snackbar.Snackbar
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.internal.schedulers.ScheduledRunnable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_poke_list.*
-import java.util.concurrent.TimeUnit
 
 class PokeListFragment : Fragment() {
     private val args: PokeListFragmentArgs by navArgs()
@@ -44,18 +47,27 @@ class PokeListFragment : Fragment() {
         pokeRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         //adapter.pokemons = getDummyPokeList()
 
-//        disposables.add(adapter.onPokeClicked
-//                .subscribe{pokemon ->
-//                    val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
-//                    findNavController().navigate(action)
-//                }
-//        )
+        disposables.add(adapter.onPokeClicked
+                .subscribe{pokemon ->
+                    //val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
+                    val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
+                    findNavController().navigate(action)
+                }
+        )
 
-        viewModel.getPokeListResponse().observe(viewLifecycleOwner){pokeList ->
-            Log.d("Imprimir", pokeList.toString())
-            adapter.pokemons = pokeList
-            pokeRecyclerView.visibility = View.VISIBLE
-        }
+//        viewModel.getPokeListResponse().observe(viewLifecycleOwner){pokeList ->
+//            Log.d("Imprimir", pokeList.toString())
+//            adapter.pokemons = pokeList
+//            pokeRecyclerView.visibility = View.VISIBLE
+//        }
+        viewModel.getPokeList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {pokeList->
+                adapter.pokemons = pokeList
+                pokeRecyclerView.visibility = View.VISIBLE
+            }
+
         viewModel.getIsMakingRequest().observe(viewLifecycleOwner){isMakingRequest ->
             progressBar.visibility = if(isMakingRequest) View.VISIBLE else View.GONE
 

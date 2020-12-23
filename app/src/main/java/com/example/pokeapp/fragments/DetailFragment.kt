@@ -25,10 +25,10 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Glide.with(imgPokeDetail.context)
-                .load(args.pokemon.image)
+                .load(args.pokeDetails.sprites.front_default)
                 .into(imgPokeDetail);
 
-        lblPokeName.text = args.pokemon.name
-        lblPokeDetail.text = args.pokemon.description
+        lblPokeName.text = args.pokeDetails.name
+        lblPokeDetail.text = args.pokeDetails.moves[0].move.name
     }
 }
