@@ -3,4 +3,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_text">Ha ocurrido un error</string>
+    <string name="trainer">Entrenador</string>
+    <string name="Male">Hombre</string>
+    <string name="Female">Mujer</string>
+    <string name="Login">Ingresar</string>
+    <string name="All">Todos</string>
+    <string name="Favorites">Favoritos</string>
+    <string name="Detail">Detalle</string>
+    <string name="Pokemon">Pokémon</string>
+    <string name="Sex">Sexo</string>
 </resources>

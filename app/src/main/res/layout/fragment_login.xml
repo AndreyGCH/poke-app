@@ -42,7 +42,7 @@
             android:layout_marginEnd="16dp"
             android:inputType="text"
             android:imeOptions="actionDone"
-            android:hint="Trainer"
+            android:hint="@string/trainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -50,7 +50,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
-
+        android:id="@+id/sexRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -63,9 +63,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
-            android:text="Male"
+            android:text="@string/Male"
             tools:layout_editor_absoluteX="207dp"
-            tools:layout_editor_absoluteY="86dp" />
+            tools:layout_editor_absoluteY="86dp"
+            android:checked="true"/>
 
         <RadioButton
             android:id="@+id/radioButtonFemale"
@@ -73,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_weight="1"
-            android:text="Female"
+            android:text="@string/Female"
             tools:layout_editor_absoluteX="14dp"
             tools:layout_editor_absoluteY="36dp" />
     </RadioGroup>
@@ -83,7 +84,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:text="Login"
+        android:text="@string/Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

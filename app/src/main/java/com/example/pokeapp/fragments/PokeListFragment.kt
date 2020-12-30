@@ -43,6 +43,7 @@ class PokeListFragment : Fragment() {
         disposables.clear()
 
         lblTrainerName.text = args.trainerName;
+        txtSex.text = args.trainerSex;
         pokeRecyclerView.adapter = adapter
         pokeRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         //adapter.pokemons = getDummyPokeList()

@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/pageFavorite"
-        android:enabled="true"
-        android:icon="@drawable/ic_favorite"
-        android:title="Favorites"/>
-    <item
-        android:id="@+id/pageRecent"
-        android:enabled="true"
-        android:icon="@drawable/ic_recent"
-        android:title="Recent"/>
-    <item
         android:id="@+id/pageAll"
         android:enabled="true"
         android:icon="@drawable/ic_select_all"
-        android:title="All"/>
+        android:title="@string/All"/>
+    <item
+        android:id="@+id/pageFavorite"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/Favorites"/>
+
 </menu>

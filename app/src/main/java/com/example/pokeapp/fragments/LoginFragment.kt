@@ -4,19 +4,24 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.example.pokeapp.R
 import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.widget.checked
+import com.jakewharton.rxbinding4.widget.checkedChanges
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.log
 
 
 class LoginFragment : Fragment() {
@@ -49,11 +54,15 @@ class LoginFragment : Fragment() {
                         loginLinearLayout.error = if(TextUtils.isEmpty(txtLoginTrainer.text.toString())) "Campo requerido" else null
                     }
         )
+
         disposable.add(
                 loginButton.clicks()
                         .throttleFirst(1000, TimeUnit.MILLISECONDS)
                         .subscribe{
-                            val action = LoginFragmentDirections.actionLoginFragmentToPokeListFragment(txtLoginTrainer.text.toString())
+                            var sex = if(radioButtonMale.isChecked) "H" else "M"
+                            Log.i("radioButton", sexRadioGroup.checked().toString())
+
+                            val action = LoginFragmentDirections.actionLoginFragmentToPokeListFragment(txtLoginTrainer.text.toString(), sex)
                             findNavController().navigate(action)
                         }
         )
