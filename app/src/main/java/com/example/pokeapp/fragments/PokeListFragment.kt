@@ -22,6 +22,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.internal.schedulers.ScheduledRunnable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_poke_list.*
+import java.util.concurrent.TimeUnit
 
 class PokeListFragment : Fragment() {
     private val args: PokeListFragmentArgs by navArgs()
@@ -49,6 +50,7 @@ class PokeListFragment : Fragment() {
         //adapter.pokemons = getDummyPokeList()
 
         disposables.add(adapter.onPokeClicked
+                .throttleFirst(400, TimeUnit.MILLISECONDS)
                 .subscribe{pokemon ->
                     //val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
                     val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
@@ -77,6 +79,9 @@ class PokeListFragment : Fragment() {
             Snackbar.make(parent, R.string.error_text, Snackbar.LENGTH_LONG).show()
         }
        // viewModel.getPokeList()
+
+        //Pagination
+        //pokeRecyclerView.addOnScrollListener()
     }
 
     override fun onDestroy() {

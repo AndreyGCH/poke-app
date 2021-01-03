@@ -29,6 +29,15 @@ class DetailFragment : Fragment() {
                 .into(imgPokeDetail);
 
         lblPokeName.text = args.pokeDetails.name
-        lblPokeDetail.text = args.pokeDetails.moves[0].move.name
+
+        txtPokeId.text =  args.pokeDetails.id
+        txtPokeExp.text = args.pokeDetails.base_experience
+        lblPokeStat.text = args.pokeDetails.stats[0].stat.name+ ":"
+        txtPokeStat.text = args.pokeDetails.stats[0].base_stat
+        txtPokeEfford.text= args.pokeDetails.stats[0].effort
+        txtPokeHeight.text = args.pokeDetails.height
+        txtPokeWeight.text = args.pokeDetails.weight
+        txtPokeMove.text = args.pokeDetails.moves[0].move.name
+        txtPokeType.text = args.pokeDetails.types[0].type.name
     }
 }

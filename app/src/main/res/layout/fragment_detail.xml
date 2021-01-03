@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/PokeId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.DetailFragment">
@@ -10,21 +11,22 @@
         android:id="@+id/imgPokeDetail"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblPokeName"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/lblPokeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="@string/Pokemon"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgPokeDetail" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lblPokeText"
@@ -32,31 +34,175 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="@string/Detail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblPokeName" />
-
-    <TextView
-        android:id="@+id/lblPokeDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Lorem ipsum dolor sit amet consectetur adipiscing elit, maecenas rhoncus tellus magnis penatibus nec convallis, phasellus vulputate felis nullam dapibus natoque. Accumsan himenaeos pulvinar ullamcorper proin rutrum, curabitur sapien posuere egestas mus, condimentum gravida ut platea. Suspendisse ullamcorper quis pellentesque sociosqu malesuada iaculis libero ridiculus, pretium nibh sagittis mollis tortor volutpat rhoncus nullam, aenean suscipit integer molestie erat id nulla."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:text="@string/Detail"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblPokeText" />
+        app:layout_constraintTop_toBottomOf="@+id/imgPokeDetail" />
 
     <TextView
-        android:id="@+id/lblEvolution"
+        android:id="@+id/lblPokeId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Evolutions"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblPokeDetail" />
+        android:text="@string/PokeId"
+        app:layout_constraintStart_toStartOf="@+id/lblPokeText"
+        app:layout_constraintTop_toBottomOf="@+id/lblPokeText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:id="@+id/lblPokeExp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/PokeExp"
+        app:layout_constraintStart_toStartOf="@+id/lblPokeId"
+        app:layout_constraintTop_toBottomOf="@+id/lblPokeId"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:id="@+id/lblPokeHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/PokeHeight"
+        app:layout_constraintStart_toStartOf="@+id/lblPokeStat"
+        app:layout_constraintTop_toBottomOf="@+id/lblPokeStat"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:id="@+id/lblPokeWeigth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/PokeWeight"
+        app:layout_constraintStart_toStartOf="@+id/lblPokeHeight"
+        app:layout_constraintTop_toBottomOf="@+id/lblPokeHeight"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:id="@+id/lblPokeMove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/PokeMove"
+        app:layout_constraintStart_toStartOf="@+id/lblPokeWeigth"
+        app:layout_constraintTop_toBottomOf="@+id/lblPokeWeigth"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:id="@+id/lblPokeStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/PokeStat"
+        app:layout_constraintStart_toStartOf="@+id/lblPokeExp"
+        app:layout_constraintTop_toBottomOf="@+id/lblPokeExp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:id="@+id/txtPokeId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/lblPokeId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lblPokeId"
+        app:layout_constraintTop_toTopOf="@+id/lblPokeId" />
+
+    <TextView
+        android:id="@+id/txtPokeExp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/lblPokeExp"
+        app:layout_constraintStart_toStartOf="@+id/txtPokeId"
+        app:layout_constraintTop_toTopOf="@+id/lblPokeExp" />
+
+    <TextView
+        android:id="@+id/txtPokeStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/lblPokeStat"
+        app:layout_constraintStart_toEndOf="@+id/lblStat"
+        app:layout_constraintTop_toTopOf="@+id/lblPokeStat" />
+
+    <TextView
+        android:id="@+id/txtPokeHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/lblPokeHeight"
+        app:layout_constraintStart_toStartOf="@+id/lblStat"
+        app:layout_constraintTop_toTopOf="@+id/lblPokeHeight" />
+
+    <TextView
+        android:id="@+id/txtPokeWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/lblPokeWeigth"
+        app:layout_constraintStart_toStartOf="@+id/txtPokeHeight"
+        app:layout_constraintTop_toTopOf="@+id/lblPokeWeigth" />
+
+    <TextView
+        android:id="@+id/txtPokeMove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/lblPokeMove"
+        app:layout_constraintStart_toStartOf="@+id/txtPokeWeight"
+        app:layout_constraintTop_toTopOf="@+id/lblPokeMove" />
+
+    <TextView
+        android:id="@+id/lblPokeType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/PokeType"
+        app:layout_constraintStart_toStartOf="@+id/lblPokeMove"
+        app:layout_constraintTop_toBottomOf="@+id/lblPokeMove"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:id="@+id/txtPokeType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/lblPokeType"
+        app:layout_constraintStart_toStartOf="@+id/txtPokeMove"
+        app:layout_constraintTop_toTopOf="@+id/lblPokeType" />
+
+    <TextView
+        android:id="@+id/lblStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stat"
+        app:layout_constraintBottom_toBottomOf="@+id/lblPokeStat"
+        app:layout_constraintStart_toStartOf="@+id/txtPokeExp"
+        app:layout_constraintTop_toTopOf="@+id/lblPokeStat" />
+
+    <TextView
+        android:id="@+id/lblEfford"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/Efford"
+        app:layout_constraintBottom_toBottomOf="@+id/lblStat"
+        app:layout_constraintStart_toEndOf="@+id/txtPokeStat"
+        app:layout_constraintTop_toTopOf="@+id/lblStat" />
+
+    <TextView
+        android:id="@+id/txtPokeEfford"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/lblEfford"
+        app:layout_constraintStart_toEndOf="@+id/lblEfford"
+        app:layout_constraintTop_toTopOf="@+id/lblEfford" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

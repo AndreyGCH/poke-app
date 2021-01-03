@@ -12,4 +12,16 @@
     <string name="Detail">Detalle</string>
     <string name="Pokemon">Pokémon</string>
     <string name="Sex">Sexo</string>
+    <string name="AddFav">Añadido a favoritos</string>
+    <string name="DltFav">Removido de favoritos</string>
+    <string name="PokemonNumber">Número de pokémon:</string>
+    <string name="PokeId">Pokémon ID:</string>
+    <string name="PokeExp">Experiencia Base:</string>
+    <string name="PokeHeight">Altura:</string>
+    <string name="PokeWeight">Peso:</string>
+    <string name="PokeMove">Movimiento:</string>
+    <string name="PokeStat">Estadística:</string>
+    <string name="PokeType">Tipo:</string>
+    <string name="stat">Stat:</string>
+    <string name="Efford">Esfuerzo:</string>
 </resources>

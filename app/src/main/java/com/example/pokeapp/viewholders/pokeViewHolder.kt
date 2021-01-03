@@ -1,6 +1,7 @@
 package com.example.pokeapp.viewholders
 
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pokeapp.R
@@ -20,13 +21,26 @@ class pokeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .into(itemView.pokeImageView);
 
         //val isFavorite = if (pokemon.isFavorite) R.drawable.ic_star else R.drawable.ic_star_border
-
-//        Glide.with(itemView.context)
-//            .load(isFavorite)
-//            .into(itemView.favImageView)
+        var favImage = R.drawable.ic_star_border
+        //val isFavorite = if (pokemon.isFavorite) R.drawable.ic_star else R.drawable.ic_star_border
+        Glide.with(itemView.context)
+            .load(favImage)
+            .into(itemView.favImageView)
 
         itemView.setOnClickListener{
             listener.onNext(pokemon)
+        }
+
+        itemView.favImageView.setOnClickListener{
+            favImage = if(favImage == R.drawable.ic_star) R.drawable.ic_star_border else R.drawable.ic_star
+            Glide.with(itemView.context)
+                    .load(favImage)
+                    .into(itemView.favImageView)
+            if(favImage == R.drawable.ic_star){
+                Toast.makeText(itemView.context, R.string.AddFav, Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(itemView.context, R.string.DltFav, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
