@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_poke_list.*
 import java.util.concurrent.TimeUnit
 
 class PokeListFragment : Fragment() {
-    private val args: PokeListFragmentArgs by navArgs()
+    //private val args: PokeListFragmentArgs by navArgs()
     private val adapter = PokeAdapter()
     private  val disposables =  CompositeDisposable()
     private val viewModel: pokeListViewModel by viewModels()
@@ -43,8 +43,8 @@ class PokeListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         disposables.clear()
 
-        lblTrainerName.text = args.trainerName;
-        txtSex.text = args.trainerSex;
+        //lblTrainerName.text = args.trainerName;
+        //txtSex.text = args.trainerSex;
         pokeRecyclerView.adapter = adapter
         pokeRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         //adapter.pokemons = getDummyPokeList()
@@ -53,7 +53,8 @@ class PokeListFragment : Fragment() {
                 .throttleFirst(400, TimeUnit.MILLISECONDS)
                 .subscribe{pokemon ->
                     //val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
-                    val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
+                    //val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
+                    val action = PokeListFragmentDirections.actionPokeListFragment2ToDetailFragment3(pokemon)
                     findNavController().navigate(action)
                 }
         )

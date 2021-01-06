@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/pageAll"
+        android:id="@+id/pokeListFragment2"
         android:enabled="true"
         android:icon="@drawable/ic_select_all"
         android:title="@string/All"/>
     <item
-        android:id="@+id/pageFavorite"
+        android:id="@+id/favPokeListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_favorite"
         android:title="@string/Favorites"/>

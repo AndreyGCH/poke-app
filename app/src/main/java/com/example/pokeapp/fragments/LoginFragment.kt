@@ -63,7 +63,8 @@ class LoginFragment : Fragment() {
                             var sex = if(radioButtonMale.isChecked) "H" else "M"
                             Log.i("radioButton", sexRadioGroup.checked().toString())
 
-                            val action = LoginFragmentDirections.actionLoginFragmentToPokeListFragment(txtLoginTrainer.text.toString(), sex)
+                            //val action = LoginFragmentDirections.actionLoginFragmentToPokeListFragment(txtLoginTrainer.text.toString(), sex)
+                            val action = LoginFragmentDirections.actionLoginFragmentToBottomMenuFragment(txtLoginTrainer.text.toString(), sex)
                             findNavController().navigate(action)
                         }
         )

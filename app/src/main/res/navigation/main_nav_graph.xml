@@ -17,6 +17,13 @@
             app:exitAnim="@anim/wait_anim"
             app:popEnterAnim="@anim/wait_anim"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_bottomMenuFragment"
+            app:destination="@id/bottomMenuFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/pokeListFragment"
@@ -45,5 +52,17 @@
         <argument
             android:name="pokeDetails"
             app:argType="com.example.pokeapp.models.PokeDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/bottomMenuFragment"
+        android:name="com.example.pokeapp.fragments.BottomMenuFragment"
+        android:label="fragment_bottom_menu"
+        tools:layout="@layout/fragment_bottom_menu" >
+        <argument
+            android:name="trainerName"
+            app:argType="string" />
+        <argument
+            android:name="trainerSex"
+            app:argType="string" />
     </fragment>
 </navigation>
