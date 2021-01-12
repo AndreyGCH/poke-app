@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.pokeapp.R
 import com.example.pokeapp.adapters.PokeAdapter
 import com.example.pokeapp.models.pokemon
+import com.example.pokeapp.viewmodels.favListViewModel
 import com.example.pokeapp.viewmodels.pokeListViewModel
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -29,6 +30,7 @@ class PokeListFragment : Fragment() {
     private val adapter = PokeAdapter()
     private  val disposables =  CompositeDisposable()
     private val viewModel: pokeListViewModel by viewModels()
+    private val viewModel2: favListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,27 +45,17 @@ class PokeListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         disposables.clear()
 
-        //lblTrainerName.text = args.trainerName;
-        //txtSex.text = args.trainerSex;
         pokeRecyclerView.adapter = adapter
         pokeRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-        //adapter.pokemons = getDummyPokeList()
 
         disposables.add(adapter.onPokeClicked
                 .throttleFirst(400, TimeUnit.MILLISECONDS)
                 .subscribe{pokemon ->
-                    //val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
-                    //val action = PokeListFragmentDirections.actionPokeListFragmentToDetailFragment(pokemon)
                     val action = PokeListFragmentDirections.actionPokeListFragment2ToDetailFragment3(pokemon)
                     findNavController().navigate(action)
                 }
         )
 
-//        viewModel.getPokeListResponse().observe(viewLifecycleOwner){pokeList ->
-//            Log.d("Imprimir", pokeList.toString())
-//            adapter.pokemons = pokeList
-//            pokeRecyclerView.visibility = View.VISIBLE
-//        }
         viewModel.getPokeList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -79,10 +71,13 @@ class PokeListFragment : Fragment() {
         viewModel.getIsError().observe(viewLifecycleOwner){isError ->
             Snackbar.make(parent, R.string.error_text, Snackbar.LENGTH_LONG).show()
         }
-       // viewModel.getPokeList()
 
-        //Pagination
-        //pokeRecyclerView.addOnScrollListener()
+        disposables.add(adapter.databaseItemClick.subscribe{pokemon->
+            viewModel.insert(com.example.pokeapp.db.pokemon(pokemon.id,pokemon.base_experience,pokemon.height
+                    ,pokemon.weight,pokemon.name,pokemon.sprites.front_default,pokemon.moves[0].move.name,pokemon.stats[0].stat.name
+                    ,pokemon.stats[0].effort,pokemon.stats[0].base_stat,pokemon.types[0].type.name))
+        })
+
     }
 
     override fun onDestroy() {

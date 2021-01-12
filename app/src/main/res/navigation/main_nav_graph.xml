@@ -11,47 +11,12 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_pokeListFragment"
-            app:destination="@id/pokeListFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/wait_anim"
-            app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
             android:id="@+id/action_loginFragment_to_bottomMenuFragment"
             app:destination="@id/bottomMenuFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/wait_anim"
             app:popEnterAnim="@anim/wait_anim"
             app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/pokeListFragment"
-        android:name="com.example.pokeapp.fragments.PokeListFragment"
-        android:label="fragment_poke_list"
-        tools:layout="@layout/fragment_poke_list" >
-        <action
-            android:id="@+id/action_pokeListFragment_to_detailFragment"
-            app:destination="@id/detailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <argument
-            android:name="trainerName"
-            app:argType="string" />
-        <argument
-            android:name="trainerSex"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.example.pokeapp.fragments.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
-        <argument
-            android:name="pokeDetails"
-            app:argType="com.example.pokeapp.models.PokeDetails" />
     </fragment>
     <fragment
         android:id="@+id/bottomMenuFragment"

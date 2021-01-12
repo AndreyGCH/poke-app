@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id "androidx.navigation.safeargs.kotlin"
+    id "kotlin-kapt"
 }
 
 android {
@@ -65,6 +66,15 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.11.0") {
         exclude group: "com.android.support"
     }
+    //ROOM
+    def room_version = "2.2.5"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    //optional - Kotling Extension and Courtines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 }
 
 
