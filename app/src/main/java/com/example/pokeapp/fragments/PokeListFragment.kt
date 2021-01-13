@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.pokeapp.R
+import com.example.pokeapp.adapters.FavAdapter
 import com.example.pokeapp.adapters.PokeAdapter
 import com.example.pokeapp.models.pokemon
 import com.example.pokeapp.viewmodels.favListViewModel
@@ -28,9 +29,10 @@ import java.util.concurrent.TimeUnit
 class PokeListFragment : Fragment() {
     //private val args: PokeListFragmentArgs by navArgs()
     private val adapter = PokeAdapter()
+    private val favAdapter = FavAdapter()
     private  val disposables =  CompositeDisposable()
     private val viewModel: pokeListViewModel by viewModels()
-    private val viewModel2: favListViewModel by viewModels()
+    private var flag = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,9 +75,14 @@ class PokeListFragment : Fragment() {
         }
 
         disposables.add(adapter.databaseItemClick.subscribe{pokemon->
-            viewModel.insert(com.example.pokeapp.db.pokemon(pokemon.id,pokemon.base_experience,pokemon.height
-                    ,pokemon.weight,pokemon.name,pokemon.sprites.front_default,pokemon.moves[0].move.name,pokemon.stats[0].stat.name
-                    ,pokemon.stats[0].effort,pokemon.stats[0].base_stat,pokemon.types[0].type.name))
+
+
+
+
+                viewModel.insert(com.example.pokeapp.db.pokemon(pokemon.id,pokemon.base_experience,pokemon.height
+                        ,pokemon.weight,pokemon.name,pokemon.sprites.front_default,pokemon.moves[0].move.name,pokemon.stats[0].stat.name
+                        ,pokemon.stats[0].effort,pokemon.stats[0].base_stat,pokemon.types[0].type.name))
+
         })
 
     }

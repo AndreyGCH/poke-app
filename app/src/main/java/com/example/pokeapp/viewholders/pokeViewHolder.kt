@@ -46,21 +46,17 @@ class pokeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         itemView.favImageView.setOnClickListener{
-            databaseListener.onNext(pokemon)
+
             favImage = if(favImage == R.drawable.ic_star) R.drawable.ic_star_border else R.drawable.ic_star
             Glide.with(itemView.context)
                     .load(favImage)
                     .into(itemView.favImageView)
             if(favImage == R.drawable.ic_star){
+                databaseListener.onNext(pokemon)
                 Toast.makeText(itemView.context, R.string.AddFav, Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(itemView.context, R.string.DltFav, Toast.LENGTH_SHORT).show()
             }
         }
-//        disposables.add( adapter.databaseItemClick.subscribe(
-            //Toast.makeText(, "PRUEBA CLICK REACTIVO", Toast.LENGTH_SHORT).show()
-              //  Log.i("OBJETO PRUEBA", "")
-//            viewModel.insert(com.example.pokeapp.db.pokemon("","","",
-//                "","","","","","","",""))
     }
 }

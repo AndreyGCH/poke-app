@@ -24,4 +24,6 @@
     <string name="PokeType">Tipo:</string>
     <string name="stat">Stat:</string>
     <string name="Efford">Esfuerzo:</string>
+    <string name="alreadyAdded">Pokémon ya ha sido añadido</string>
+    <string name="Fav">Favoritos</string>
 </resources>
