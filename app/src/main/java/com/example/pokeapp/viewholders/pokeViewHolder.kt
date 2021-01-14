@@ -12,6 +12,7 @@ import com.example.pokeapp.models.PokeNames
 import com.example.pokeapp.models.pokemon
 import androidx.fragment.app.viewModels
 import com.example.pokeapp.adapters.PokeAdapter
+import com.example.pokeapp.viewmodels.favListViewModel
 import com.example.pokeapp.viewmodels.pokeListViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
@@ -53,7 +54,7 @@ class pokeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     .into(itemView.favImageView)
             if(favImage == R.drawable.ic_star){
                 databaseListener.onNext(pokemon)
-                Toast.makeText(itemView.context, R.string.AddFav, Toast.LENGTH_SHORT).show()
+
             }else{
                 Toast.makeText(itemView.context, R.string.DltFav, Toast.LENGTH_SHORT).show()
             }

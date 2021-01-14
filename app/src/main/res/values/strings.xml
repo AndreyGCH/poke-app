@@ -26,4 +26,8 @@
     <string name="Efford">Esfuerzo:</string>
     <string name="alreadyAdded">Pokémon ya ha sido añadido</string>
     <string name="Fav">Favoritos</string>
+    <string name="RemovePoke">Remover pokémon?</string>
+    <string name="Yes">Si</string>
+    <string name="Cancel">Cancelar</string>
+    <string name="Accept">Aceptar</string>
 </resources>

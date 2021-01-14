@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.pokeapp.R
 import com.example.pokeapp.adapters.FavAdapter
 import com.example.pokeapp.adapters.PokeAdapter
+import com.example.pokeapp.dialog.ConfirmationDialogFragment
 import com.example.pokeapp.models.pokemon
 import com.example.pokeapp.viewmodels.favListViewModel
 import com.example.pokeapp.viewmodels.pokeListViewModel
@@ -27,12 +28,13 @@ import kotlinx.android.synthetic.main.fragment_poke_list.*
 import java.util.concurrent.TimeUnit
 
 class PokeListFragment : Fragment() {
+    var dialog = ConfirmationDialogFragment()
     //private val args: PokeListFragmentArgs by navArgs()
     private val adapter = PokeAdapter()
     private val favAdapter = FavAdapter()
     private  val disposables =  CompositeDisposable()
     private val viewModel: pokeListViewModel by viewModels()
-    private var flag = false
+    val favViewmodel: favListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,14 +76,35 @@ class PokeListFragment : Fragment() {
             Snackbar.make(parent, R.string.error_text, Snackbar.LENGTH_LONG).show()
         }
 
-        disposables.add(adapter.databaseItemClick.subscribe{pokemon->
+        var flag = false
+
+        disposables.add(adapter.databaseItemClick.observeOn(AndroidSchedulers.mainThread())
+                .subscribe{pokemon->
+                    var count = 0
+                    favViewmodel.getAll().observe(viewLifecycleOwner){pokemons ->
+                        if (count === 0){
+                            pokemons.size
+                            for (poke in  pokemons){
+                                if (pokemon.id == poke.id){
+                                    flag = true
+                                }
+                            }
+                            if (!flag){
+                                viewModel.insert(com.example.pokeapp.db.pokemon(pokemon.id,pokemon.base_experience,pokemon.height
+                                    ,pokemon.weight,pokemon.name,pokemon.sprites.front_default,pokemon.moves[0].move.name,pokemon.stats[0].stat.name
+                                    ,pokemon.stats[0].effort,pokemon.stats[0].base_stat,pokemon.types[0].type.name))
+                                Toast.makeText(this.context, R.string.AddFav, Toast.LENGTH_SHORT).show()
+                                count++
+                            }else{
+                                dialog.show(this.parentFragmentManager,tag)
+                                Toast.makeText(this.context, R.string.alreadyAdded, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                    }
 
 
 
-
-                viewModel.insert(com.example.pokeapp.db.pokemon(pokemon.id,pokemon.base_experience,pokemon.height
-                        ,pokemon.weight,pokemon.name,pokemon.sprites.front_default,pokemon.moves[0].move.name,pokemon.stats[0].stat.name
-                        ,pokemon.stats[0].effort,pokemon.stats[0].base_stat,pokemon.types[0].type.name))
 
         })
 

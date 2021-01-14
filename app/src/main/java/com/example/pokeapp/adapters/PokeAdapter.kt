@@ -20,6 +20,7 @@ class PokeAdapter: RecyclerView.Adapter<pokeViewHolder>() {
     private val databaseClicksItem : PublishSubject<PokeDetails> = PublishSubject.create()
     val databaseItemClick : Observable<PokeDetails> = databaseClicksItem.hide()
 
+
     private val clickListener: PublishSubject<PokeDetails> =  PublishSubject.create()
 
     val onPokeClicked: Observable<PokeDetails> = clickListener.hide()
