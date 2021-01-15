@@ -3,6 +3,7 @@ package com.example.pokeapp.viewmodels
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.pokeapp.db.pokemon
+import com.example.pokeapp.db.pokemonDao
 import com.example.pokeapp.db.pokemonDatabase
 import com.example.pokeapp.models.PokeDetails
 import com.example.pokeapp.network.RetrofitProvider
@@ -30,6 +31,8 @@ class pokeListViewModel (application: Application) :  AndroidViewModel(applicati
         }
         return
     }
+
+
 
     fun getIsMakingRequest(): MutableLiveData<Boolean>{
         return isMakingRequest

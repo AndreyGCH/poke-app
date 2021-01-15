@@ -79,6 +79,7 @@ class PokeListFragment : Fragment() {
         var flag = false
 
         disposables.add(adapter.databaseItemClick.observeOn(AndroidSchedulers.mainThread())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .subscribe{pokemon->
                     var count = 0
                     favViewmodel.getAll().observe(viewLifecycleOwner){pokemons ->
@@ -96,8 +97,34 @@ class PokeListFragment : Fragment() {
                                 Toast.makeText(this.context, R.string.AddFav, Toast.LENGTH_SHORT).show()
                                 count++
                             }else{
-                                dialog.show(this.parentFragmentManager,tag)
-                                Toast.makeText(this.context, R.string.alreadyAdded, Toast.LENGTH_SHORT).show()
+                                var flagfav = false
+                                val bundle = Bundle()
+                                bundle.putString("id", pokemon.id)
+                                bundle.putString("base_experience", pokemon.base_experience)
+                                bundle.putString("height",pokemon.height)
+                                bundle.putString("weight",pokemon.weight)
+                                bundle.putString("name",pokemon.name)
+                                bundle.putString("sprites",pokemon.sprites.front_default)
+                                bundle.putString("moves",pokemon.moves[0].move.name)
+                                bundle.putString("stat",pokemon.stats[0].stat.name)
+                                bundle.putString("effort",pokemon.stats[0].effort)
+                                bundle.putString("base_stat",pokemon.stats[0].base_stat)
+                                bundle.putString("type",pokemon.types[0].type.name)
+                                val pokeList : ArrayList<String> = ArrayList()
+                                pokemons.map { poke ->
+                                    pokeList.add(poke.id)
+                                    if(pokemon.id == poke.id){
+                                        flagfav = true
+                                    }
+                                }
+
+                                bundle.putStringArrayList("pokemons",  pokeList)
+                                dialog.arguments = bundle
+                                if(flagfav){
+                                    dialog.show(this.parentFragmentManager,tag)
+                                    Toast.makeText(this.context, R.string.alreadyAdded, Toast.LENGTH_SHORT).show()
+                                }
+
                             }
                         }
 

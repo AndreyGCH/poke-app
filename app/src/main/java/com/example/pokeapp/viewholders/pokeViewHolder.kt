@@ -47,13 +47,13 @@ class pokeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         itemView.favImageView.setOnClickListener{
-
+            databaseListener.onNext(pokemon)
             favImage = if(favImage == R.drawable.ic_star) R.drawable.ic_star_border else R.drawable.ic_star
             Glide.with(itemView.context)
                     .load(favImage)
                     .into(itemView.favImageView)
             if(favImage == R.drawable.ic_star){
-                databaseListener.onNext(pokemon)
+
 
             }else{
                 Toast.makeText(itemView.context, R.string.DltFav, Toast.LENGTH_SHORT).show()

@@ -11,4 +11,10 @@ class PokemonRepository(private val pokemonDao: pokemonDao) {
     }
 
     val allPokemons : Flow<List<pokemon>> = pokemonDao.getAllPokemons()
+    suspend fun removePoke(pokemon: pokemon){
+       pokemonDao.removePoke(pokemon)
+    }
+    suspend fun deletePoke(pokeId: String){
+        pokemonDao.deletePoke(pokeId)
+    }
 }
