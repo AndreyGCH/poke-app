@@ -30,5 +30,6 @@ class favListViewModel(application: Application): AndroidViewModel(application) 
         viewModelScope.launch {
             repository.deletePoke(pokeId)
         }
+        return
     }
 }

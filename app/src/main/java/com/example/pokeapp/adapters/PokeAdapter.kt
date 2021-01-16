@@ -22,14 +22,23 @@ class PokeAdapter: RecyclerView.Adapter<pokeViewHolder>() {
 
 
     private val clickListener: PublishSubject<PokeDetails> =  PublishSubject.create()
-
     val onPokeClicked: Observable<PokeDetails> = clickListener.hide()
+
+    private val clickDeleteListener: PublishSubject<PokeDetails> =  PublishSubject.create()
+    val onPokeDeleteClicked: Observable<PokeDetails> = clickDeleteListener.hide()
 
     var pokemons: List<PokeDetails> = emptyList()
     set(value) {
         field = value
         notifyDataSetChanged()
     }
+
+    var favPokemons: List<com.example.pokeapp.db.pokemon> = emptyList()
+    set(value){
+        field = value
+        notifyDataSetChanged()
+    }
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): pokeViewHolder {
@@ -38,7 +47,7 @@ class PokeAdapter: RecyclerView.Adapter<pokeViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: pokeViewHolder, position: Int) {
-        holder.bind(pokemons[position], clickListener, databaseClicksItem)
+        holder.bind(pokemons[position], clickListener, databaseClicksItem, favPokemons , clickDeleteListener)
     }
 
     override fun getItemCount() = pokemons.size

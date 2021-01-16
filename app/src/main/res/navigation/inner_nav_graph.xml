@@ -10,12 +10,6 @@
         android:name="com.example.pokeapp.fragments.PokeListFragment"
         android:label="fragment_poke_list"
         tools:layout="@layout/fragment_poke_list" >
-        <argument
-            android:name="trainerName"
-            app:argType="string" />
-        <argument
-            android:name="trainerSex"
-            app:argType="string" />
         <action
             android:id="@+id/action_pokeListFragment2_to_detailFragment3"
             app:destination="@id/detailFragment3"
@@ -28,11 +22,7 @@
         android:id="@+id/favPokeListFragment"
         android:name="com.example.pokeapp.fragments.FavPokeListFragment"
         android:label="fragment_fav_poke_list"
-        tools:layout="@layout/fragment_fav_poke_list" >
-        <action
-            android:id="@+id/action_favPokeListFragment_to_detailFragment3"
-            app:destination="@id/detailFragment3" />
-    </fragment>
+        tools:layout="@layout/fragment_fav_poke_list" />
     <fragment
         android:id="@+id/detailFragment3"
         android:name="com.example.pokeapp.fragments.DetailFragment"

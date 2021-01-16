@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.poke_item_view_holder.view.*
 class FavViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
     fun bind(pokemon: pokemon){
         itemView.txtFavPoke.text = pokemon.name
-        itemView.txtFavPokeTyoe.text = pokemon.types
 
         Glide.with(itemView.context)
                 .load(pokemon.sprites)

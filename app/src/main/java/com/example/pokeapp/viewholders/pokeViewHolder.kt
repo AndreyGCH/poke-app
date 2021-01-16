@@ -26,7 +26,9 @@ class pokeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private  val disposables =  CompositeDisposable()
     private val adapter = PokeAdapter()
 
-    fun bind(pokemon: PokeDetails, listener: Observer<PokeDetails>, databaseListener:Observer<PokeDetails>){
+
+    fun bind(pokemon: PokeDetails, listener: Observer<PokeDetails>, databaseListener:Observer<PokeDetails>,
+             favPokeList: List<com.example.pokeapp.db.pokemon>, databaseDeleteListener:Observer<PokeDetails>){
         itemView.pokeNameTextView.text = pokemon.name
         itemView.pokeDescTextView.text = pokemon.types[0].type.name
 
@@ -34,8 +36,14 @@ class pokeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .load(pokemon.sprites.front_default)
             .into(itemView.pokeImageView);
 
-        //val isFavorite = if (pokemon.isFavorite) R.drawable.ic_star else R.drawable.ic_star_border
         var favImage = R.drawable.ic_star_border
+        for (poke in  favPokeList){
+            if (pokemon.id == poke.id){
+                favImage = R.drawable.ic_star
+            }
+        }
+        //val isFavorite = if (pokemon.isFavorite) R.drawable.ic_star else R.drawable.ic_star_border
+
 
         //val isFavorite = if (pokemon.isFavorite) R.drawable.ic_star else R.drawable.ic_star_border
         Glide.with(itemView.context)
@@ -47,16 +55,17 @@ class pokeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         itemView.favImageView.setOnClickListener{
-            databaseListener.onNext(pokemon)
+
             favImage = if(favImage == R.drawable.ic_star) R.drawable.ic_star_border else R.drawable.ic_star
             Glide.with(itemView.context)
                     .load(favImage)
                     .into(itemView.favImageView)
             if(favImage == R.drawable.ic_star){
-
+                databaseListener.onNext(pokemon)
 
             }else{
-                Toast.makeText(itemView.context, R.string.DltFav, Toast.LENGTH_SHORT).show()
+                databaseDeleteListener.onNext(pokemon)
+
             }
         }
     }

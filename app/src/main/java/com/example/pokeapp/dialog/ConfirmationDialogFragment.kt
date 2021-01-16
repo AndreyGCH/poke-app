@@ -5,15 +5,24 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.room.Room
 import com.example.pokeapp.R
 import com.example.pokeapp.adapters.FavAdapter
 import com.example.pokeapp.adapters.PokeAdapter
+import com.example.pokeapp.db.pokemon
+import com.example.pokeapp.db.pokemonDao
 import com.example.pokeapp.viewmodels.favListViewModel
 import com.example.pokeapp.viewmodels.pokeListViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_poke_list.*
 
 
 class ConfirmationDialogFragment : DialogFragment() {
@@ -22,35 +31,25 @@ class ConfirmationDialogFragment : DialogFragment() {
     val favViewmodel: favListViewModel by viewModels()
     private val favAdapter = FavAdapter()
     private val adapter = PokeAdapter()
+    var frg: Fragment? = null
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         //return super.onCreateDialog(savedInstanceState)
         return activity?.let {
-            disposables.clear()
+
             var arg = arguments
             var builder = AlertDialog.Builder(it)
-            val mainHandler = Handler(Looper.getMainLooper())
             builder.setMessage(R.string.RemovePoke)
                 .setPositiveButton(R.string.Accept, DialogInterface.OnClickListener { dialog, id ->
 
                     if (arg != null) {
-                        var foo = arg.getString("id")
-                        var goo = arg.getBundle("id")
-
-//                        favViewmodel.removePoke(pokemon(arg.getString("id").toString(),arg.getString("base_experience").toString()
-//                                ,arg.getString("height").toString(),arg.getString("weight").toString(),arg.getString("name").toString(),
-//                                arg.getString("sprites").toString(),arg.getString("moves").toString(),arg.getString("stat").toString(),
-//                                arg.getString("effort").toString(), arg.getString("base_stat").toString(),arg.getString("type").toString()))
-
                         var array = arg.getStringArrayList("pokemons")
-
-
-
                         if (array != null) {
                             array.forEach{argID ->
                                 if (argID.toString() == arg.getString("id").toString()) {
                                     favViewmodel.deletePoke(arg.getString("id").toString())
+                                    Toast.makeText(this.context, R.string.DltFav, Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }

@@ -1,16 +1,13 @@
 package com.example.pokeapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.pokeapp.R
 import com.example.pokeapp.adapters.FavAdapter
@@ -22,19 +19,20 @@ import com.example.pokeapp.viewmodels.pokeListViewModel
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.internal.schedulers.ScheduledRunnable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_poke_list.*
 import java.util.concurrent.TimeUnit
 
 class PokeListFragment : Fragment() {
     var dialog = ConfirmationDialogFragment()
-    //private val args: PokeListFragmentArgs by navArgs()
+    var deletedPokemon = ""
+    private var deleteCount = 0
     private val adapter = PokeAdapter()
     private val favAdapter = FavAdapter()
     private  val disposables =  CompositeDisposable()
     private val viewModel: pokeListViewModel by viewModels()
     val favViewmodel: favListViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +40,11 @@ class PokeListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         viewModel.getPokeList()
+        favViewmodel.getAll().observe(viewLifecycleOwner){pokemons ->
+            adapter.favPokemons =  pokemons
+
+        }
+
         return inflater.inflate(R.layout.fragment_poke_list, container, false)
     }
 
@@ -78,61 +81,69 @@ class PokeListFragment : Fragment() {
 
         var flag = false
 
-        disposables.add(adapter.databaseItemClick.observeOn(AndroidSchedulers.mainThread())
-                .throttleFirst(1000, TimeUnit.MILLISECONDS)
-                .subscribe{pokemon->
-                    var count = 0
+        disposables.add(adapter.onPokeDeleteClicked.observeOn(AndroidSchedulers.mainThread())
+                .subscribe{ pokemon->
+
                     favViewmodel.getAll().observe(viewLifecycleOwner){pokemons ->
-                        if (count === 0){
-                            pokemons.size
-                            for (poke in  pokemons){
-                                if (pokemon.id == poke.id){
-                                    flag = true
+                        if (deletedPokemon != pokemon.id) {
+                            var flagfav = false
+                            val bundle = Bundle()
+                            bundle.putString("id", pokemon.id)
+                            bundle.putString("base_experience", pokemon.base_experience)
+                            bundle.putString("height", pokemon.height)
+                            bundle.putString("weight", pokemon.weight)
+                            bundle.putString("name", pokemon.name)
+                            bundle.putString("sprites", pokemon.sprites.front_default)
+                            bundle.putString("moves", pokemon.moves[0].move.name)
+                            bundle.putString("stat", pokemon.stats[0].stat.name)
+                            bundle.putString("effort", pokemon.stats[0].effort)
+                            bundle.putString("base_stat", pokemon.stats[0].base_stat)
+                            bundle.putString("type", pokemon.types[0].type.name)
+                            val pokeList: ArrayList<String> = ArrayList()
+                            pokemons.map { poke ->
+                                pokeList.add(poke.id)
+                                if (pokemon.id == poke.id) {
+                                    flagfav = true
                                 }
                             }
-                            if (!flag){
-                                viewModel.insert(com.example.pokeapp.db.pokemon(pokemon.id,pokemon.base_experience,pokemon.height
-                                    ,pokemon.weight,pokemon.name,pokemon.sprites.front_default,pokemon.moves[0].move.name,pokemon.stats[0].stat.name
-                                    ,pokemon.stats[0].effort,pokemon.stats[0].base_stat,pokemon.types[0].type.name))
-                                Toast.makeText(this.context, R.string.AddFav, Toast.LENGTH_SHORT).show()
-                                count++
-                            }else{
-                                var flagfav = false
-                                val bundle = Bundle()
-                                bundle.putString("id", pokemon.id)
-                                bundle.putString("base_experience", pokemon.base_experience)
-                                bundle.putString("height",pokemon.height)
-                                bundle.putString("weight",pokemon.weight)
-                                bundle.putString("name",pokemon.name)
-                                bundle.putString("sprites",pokemon.sprites.front_default)
-                                bundle.putString("moves",pokemon.moves[0].move.name)
-                                bundle.putString("stat",pokemon.stats[0].stat.name)
-                                bundle.putString("effort",pokemon.stats[0].effort)
-                                bundle.putString("base_stat",pokemon.stats[0].base_stat)
-                                bundle.putString("type",pokemon.types[0].type.name)
-                                val pokeList : ArrayList<String> = ArrayList()
-                                pokemons.map { poke ->
-                                    pokeList.add(poke.id)
-                                    if(pokemon.id == poke.id){
-                                        flagfav = true
-                                    }
-                                }
 
-                                bundle.putStringArrayList("pokemons",  pokeList)
-                                dialog.arguments = bundle
-                                if(flagfav){
-                                    dialog.show(this.parentFragmentManager,tag)
-                                    Toast.makeText(this.context, R.string.alreadyAdded, Toast.LENGTH_SHORT).show()
-                                }
-
+                            bundle.putStringArrayList("pokemons", pokeList)
+                            dialog.arguments = bundle
+                            if (flagfav) {
+                                dialog.show(this.parentFragmentManager, tag)
+                                deleteCount++
+                                deletedPokemon = pokemon.id
                             }
+                        } else {
+                            deleteCount = 0
                         }
 
                     }
+                })
 
+        disposables.add(adapter.databaseItemClick.observeOn(AndroidSchedulers.mainThread())
+                .subscribe{pokemon->
+                    var count = 0
+                    var flagfav = false
+                    favViewmodel.getAll().observe(viewLifecycleOwner){pokemons ->
+                        if (count === 0) {
+                            pokemons.map { poke ->
+                                if (pokemon.id == poke.id) {
+                                    flagfav = true
+                                }
+                            }
+                            if(!flagfav){
+                                viewModel.insert(com.example.pokeapp.db.pokemon(pokemon.id, pokemon.base_experience,
+                                    pokemon.height, pokemon.weight, pokemon.name, pokemon.sprites.front_default,
+                                    pokemon.moves[0].move.name, pokemon.stats[0].stat.name, pokemon.stats[0].effort,
+                                    pokemon.stats[0].base_stat, pokemon.types[0].type.name))
+                                Toast.makeText(this.context, R.string.AddFav, Toast.LENGTH_SHORT).show()
+                                count++
+                            }
 
+                        }
 
-
+                    }
         })
 
     }
@@ -142,30 +153,6 @@ class PokeListFragment : Fragment() {
         super.onDestroy()
 
     }
-
-    private fun getDummyPokeList(): List<pokemon>{
-        return listOf(
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", true),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", true),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", true),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-            pokemon("Pikachu", "https://i.pinimg.com/originals/f3/e1/b8/f3e1b8019f160f88531d8af792716b4f.png", "Electric", false),
-
-
-        )
-    }
-
 
 
 }
