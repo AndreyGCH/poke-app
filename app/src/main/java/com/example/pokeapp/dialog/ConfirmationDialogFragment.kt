@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_poke_list.*
 class ConfirmationDialogFragment : DialogFragment() {
     private  val disposables =  CompositeDisposable()
     private val viewModel: pokeListViewModel by viewModels()
-    val favViewmodel: favListViewModel by viewModels()
+
     private val favAdapter = FavAdapter()
     private val adapter = PokeAdapter()
     var frg: Fragment? = null
@@ -47,6 +47,7 @@ class ConfirmationDialogFragment : DialogFragment() {
                         var array = arg.getStringArrayList("pokemons")
                         if (array != null) {
                             array.forEach{argID ->
+                                val favViewmodel: favListViewModel by viewModels()
                                 if (argID.toString() == arg.getString("id").toString()) {
                                     favViewmodel.deletePoke(arg.getString("id").toString())
                                     Toast.makeText(this.context, R.string.DltFav, Toast.LENGTH_SHORT).show()
@@ -57,7 +58,6 @@ class ConfirmationDialogFragment : DialogFragment() {
 
 
                     }
-
                 })
                 .setNegativeButton(R.string.Cancel, DialogInterface.OnClickListener { dialog, id ->
 
@@ -67,7 +67,6 @@ class ConfirmationDialogFragment : DialogFragment() {
     }
 
     override fun onDestroy() {
-        disposables.clear()
         super.onDestroy()
 
     }

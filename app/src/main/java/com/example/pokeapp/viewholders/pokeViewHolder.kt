@@ -42,10 +42,6 @@ class pokeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 favImage = R.drawable.ic_star
             }
         }
-        //val isFavorite = if (pokemon.isFavorite) R.drawable.ic_star else R.drawable.ic_star_border
-
-
-        //val isFavorite = if (pokemon.isFavorite) R.drawable.ic_star else R.drawable.ic_star_border
         Glide.with(itemView.context)
             .load(favImage)
             .into(itemView.favImageView)

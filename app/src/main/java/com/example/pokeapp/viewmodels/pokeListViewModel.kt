@@ -44,7 +44,7 @@ class pokeListViewModel (application: Application) :  AndroidViewModel(applicati
 
     fun getPokeList() :Observable<List<PokeDetails>>{
         isMakingRequest.postValue(true)
-        val limit = 20
+        val limit = 151
         return retrofitProvider.getPokeService().getPokeList(limit)
                 .map { response -> response.results }
                 .doOnError { isError.postValue(true)}
